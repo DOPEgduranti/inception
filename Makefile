@@ -6,7 +6,7 @@
 #    By: gduranti <gduranti@student.42firenze.it>   +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/09 10:11:24 by gduranti          #+#    #+#              #
-#    Updated: 2024/12/09 15:39:18 by gduranti         ###   ########.fr        #
+#    Updated: 2024/12/10 11:23:46 by gduranti         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,21 +19,25 @@ vol:
 status:
 	docker ps
 
+stop:
+	docker stop $$(docker ps -qa)
+
 down:
 	docker compose -f srcs/docker-compose.yml down
 
 clean: down
-	docker system prune -f
-	docker volume prune -f
+	docker system prune -a -f
+	docker volume prune -a -f
 	docker builder prune -f
 	docker image prune -f
+	docker network prune -f
 
 fclean: clean
 	sudo rm -rf $(HOME)/data
 
 re: fclean all
 
-PHONY: all vol status down clean fclean re
+PHONY: all vol status stop down clean fclean re
 
 	
 

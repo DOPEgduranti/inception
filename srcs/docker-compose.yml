@@ -1,6 +1,6 @@
 networks:
-  Inception:
-    name: Inception
+  inception:
+    name: inception
     driver: bridge
 
 volumes:
@@ -22,7 +22,7 @@ volumes:
 services:
   mariadb:
     networks:
-      - Inception
+      - inception
     volumes:
       - mariadb_v:/var/lib/mysql
     image: mariadb
@@ -36,7 +36,7 @@ services:
     depends_on:
       - mariadb        
     networks:
-      - Inception
+      - inception
     volumes:
       - wordpress_v:/var/www/html
     image: wordpress
@@ -50,7 +50,7 @@ services:
     depends_on:
       - wordpress
     networks:
-      - Inception
+      - inception
     volumes:
       - wordpress_v:/var/www/html
     image: nginx
@@ -64,7 +64,7 @@ services:
     depends_on:
       - wordpress
     networks:
-      - Inception
+      - inception
     volumes:
       - wordpress_v:/var/www/html
     image: ftp
@@ -83,7 +83,7 @@ services:
     depends_on:
       - wordpress
     networks:
-      - Inception
+      - inception
     volumes:
       - wordpress_v:/var/www/html
     image: redis
@@ -93,7 +93,7 @@ services:
 
   adminer:
     networks:
-      - Inception
+      - inception
     volumes:
       - wordpress_v:/var/www/html
     image: adminer
@@ -103,7 +103,7 @@ services:
 
   netdata:
     networks:
-      - Inception
+      - inception
     volumes:
       - wordpress_v:/var/lib/netdata/vol1
       - mariadb_v:/var/lib/netdata/vol2
@@ -117,10 +117,10 @@ services:
       - "19999:19999"
     restart: always
   
-  static:
+  static_site:
     networks:
-      - Inception
-    image: static
-    build: requirements/bonus/static
-    container_name: static
+      - inception
+    image: static_site
+    build: requirements/bonus/static_site
+    container_name: static_site
     restart: always

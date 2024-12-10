@@ -7,8 +7,6 @@ RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.ph
 
 COPY /conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 
-# COPY /conf/wp-config.php /var/www/html/
-
 COPY /tools/wordpress.sh /
 
 EXPOSE 21 20 40000:40005
