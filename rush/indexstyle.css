@@ -1,0 +1,69 @@
+body {
+	height: 100vh;
+	background-image: url(https://quifinanza.it/wp-content/uploads/sites/5/2023/11/rivoluzione-ambientale-green-tech.jpg);
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: blue;
+	display: flex;
+	margin: 0%;
+	
+}
+
+div {
+	background-color: #5BE3C6;
+	opacity: 70%;
+	display: flex;
+	width: 100%;
+	margin: 0%;
+}
+
+table {
+	border: transparent;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+th {
+	font-size: xx-large;
+	text-align: center;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	
+}
+
+.td {
+	font-size: large;
+	font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+	text-align: center;
+	opacity: 70%;
+	padding-bottom: 5px;
+	
+	
+	
+}
+
+.logo {
+	display:inline-flex;
+	align-items: center;
+	border: transparent;
+}
+
+.btn {
+	background-color: black;
+	border: none;
+	border-radius: 100px;
+	color:aliceblue;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 100%;
+	width: 100px;
+	height: 30px;
+}
+
+
+.btn:hover {background-color: darkred;}
