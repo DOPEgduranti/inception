@@ -1,0 +1,126 @@
+networks:
+  Inception:
+    name: Inception
+    driver: bridge
+
+volumes:
+  wordpress_v:
+    name: wordpress
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: "${HOME}/data/wordpress"
+  mariadb_v:
+    name: mariadb
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: "${HOME}/data/mariadb"
+
+services:
+  mariadb:
+    networks:
+      - Inception
+    volumes:
+      - mariadb_v:/var/lib/mysql
+    image: mariadb
+    build: requirements/mariadb
+    container_name: mariadb
+    env_file:
+      - .env
+    restart: always
+  
+  wordpress:
+    depends_on:
+      - mariadb        
+    networks:
+      - Inception
+    volumes:
+      - wordpress_v:/var/www/html
+    image: wordpress
+    build: requirements/wordpress
+    container_name: wordpress
+    env_file:
+      - .env
+    restart: always
+
+  nginx:
+    depends_on:
+      - wordpress
+    networks:
+      - Inception
+    volumes:
+      - wordpress_v:/var/www/html
+    image: nginx
+    build: requirements/nginx
+    container_name: nginx
+    ports:
+      - "443:443"
+    restart: always
+
+  ftp:
+    depends_on:
+      - wordpress
+    networks:
+      - Inception
+    volumes:
+      - wordpress_v:/var/www/html
+    image: ftp
+    build: requirements/bonus/ftp
+    container_name: ftp
+    ports:
+      - "21:21"
+      - "20:20"
+      - "22:22"
+      - "1998-2002:1998-2002"
+    env_file:
+      - .env
+    restart: always
+  
+  redis:
+    depends_on:
+      - wordpress
+    networks:
+      - Inception
+    volumes:
+      - wordpress_v:/var/www/html
+    image: redis
+    build: requirements/bonus/redis
+    container_name: redis
+    restart: always
+
+  adminer:
+    networks:
+      - Inception
+    volumes:
+      - wordpress_v:/var/www/html
+    image: adminer
+    build: requirements/bonus/adminer
+    container_name: adminer
+    restart: always
+
+  netdata:
+    networks:
+      - Inception
+    volumes:
+      - wordpress_v:/var/lib/netdata/vol1
+      - mariadb_v:/var/lib/netdata/vol2
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    image: netdata
+    build: requirements/bonus/netdata
+    container_name: netdata
+    ports:
+      - "19999:19999"
+    restart: always
+  
+  static:
+    networks:
+      - Inception
+    image: static
+    build: requirements/bonus/static
+    container_name: static
+    restart: always
