@@ -13,7 +13,7 @@ while ! nc -z wordpress 9000; do
   sleep 2
 done
 
-echo "WordPress is ready!"
+echo "Connected to Wordpress volume"
 
 if id -u "$FTP_USER" >/dev/null 2>&1; then
 	echo "Ready to go!"

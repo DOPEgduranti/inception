@@ -71,9 +71,8 @@ services:
     build: requirements/bonus/ftp
     container_name: ftp
     ports:
-      - "21:21"
       - "20:20"
-      - "22:22"
+      - "21:21"
       - "1998-2002:1998-2002"
     env_file:
       - .env
